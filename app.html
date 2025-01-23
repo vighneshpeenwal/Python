@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .choices {
+            margin-top: 20px;
+        }
+        .choice {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+        pre {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Let's Play Stone Paper Scissors!</h1>
+    <p>Click one of the options below to play:</p>
+    <div class="choices">
+        <div class="choice" onclick="playGame('stone')">🪨 Stone</div>
+        <div class="choice" onclick="playGame('paper')">📄 Paper</div>
+        <div class="choice" onclick="playGame('scissor')">✂️ Scissor</div>
+    </div>
+    <div class="result">
+        <p id="output"></p>
+        <pre id="ascii"></pre>
+    </div>
+
+    <script>
+        const paperAscii = `
+        ___..__
+  __..--""" ._ __.'
+              "-..__
+            '"--..__";
+ ___        '--...__"";
+    \`-..__ '"---..._;"
+          """"----'
+`;
+        const stoneAscii = `
+        ,--.--._    
+------" _, \\___)
+        / _/____)
+        \\\\//(____)
+------\\     (__)
+       \`-----"
+`;
+        const scissorAscii = `
+   _       ,/'
+  (_).  ,/'
+   _  ::
+  (_)'  \`\\.
+           \`\\.
+`;
+
+        const choices = ['stone', 'paper', 'scissor'];
+        const asciiArt = {
+            stone: stoneAscii,
+            paper: paperAscii,
+            scissor: scissorAscii
+        };
+
+        function playGame(playerChoice) {
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            let result = '';
+            if (playerChoice === computerChoice) {
+                result = "It's a DRAW!";
+            } else if (
+                (computerChoice === 'scissor' && playerChoice === 'paper') ||
+                (computerChoice === 'stone' && playerChoice === 'scissor') ||
+                (computerChoice === 'paper' && playerChoice === 'stone')
+            ) {
+                result = "YOU LOST!";
+            } else {
+                result = "YOU WON!!!";
+            }
+
+            document.getElementById('output').textContent = `You chose: ${playerChoice} | Computer chose: ${computerChoice}`;
+            document.getElementById('ascii').textContent = asciiArt[computerChoice] + `\n${result}`;
+        }
+    </script>
+</body>
+</html>
